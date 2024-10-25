@@ -21,8 +21,8 @@
                     </li>
                 </ul>
                 <div class="ms-auto">
-                    <a href="#" class="btn btn-primary">Login</a>
-                    <a href="#" class="btn btn-warning">Sign up</a>
+                    <a href="{{route('frontend.login')}}" class="btn btn-primary">Login</a>
+                    <a href="{{route('frontend.signup')}}" class="btn btn-warning">Sign up</a>
                 </div>
             </div>
         </div>
