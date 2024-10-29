@@ -17,15 +17,13 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function getUsersList(){
+    public function showUsers(){
         return view('admin.user-module.users');
     }
 
-    public function getUsers(){
-        $users = $this->_userService->getAllUsers();
-        return response()->json([
-            'data' => $users
-        ]);
+    public function getUsers(Request $request){
+        $data = $this->_userService->getAllUsers($request);
+        return response()->json($data);
     }
 
 }
