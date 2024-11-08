@@ -1,4 +1,4 @@
-@extends('auth.layouts.app')
+@extends('frontend.layouts.auth')
 @section('content')
 <div class="bg-light">
     <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">

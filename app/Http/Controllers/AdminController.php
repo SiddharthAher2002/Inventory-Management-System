@@ -26,4 +26,8 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+    public function showLoginForm(){
+        return view('admin.auth.login');
+    }
+
 }

@@ -10,9 +10,9 @@ class HomeController extends Controller
         return view('frontend.home');
     }
     public function getFrontLoginPage(){
-        return view('auth.login');
+        return view('frontend.auth.login');
     }
     public function getFrontSignupPage(){
-        return view('auth.register');
+        return view('frontend.auth.register');
     }
 }
