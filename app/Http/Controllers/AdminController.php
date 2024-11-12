@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Models\User;
 class AdminController extends Controller
 {
     protected $_userService;
@@ -42,12 +43,22 @@ class AdminController extends Controller
             'password' => ['required']
         ]);
 
-        if(Auth::attempt($inputCredentials)){
-            var_dump("yes");
+        if (Auth::attempt($inputCredentials)) {
+            $request->session()->regenerate();
+            $user = User::where('email',$inputCredentials['email'])->first();
+            Auth::login($user);
+            return redirect()->intended(route('admin.dashboard'));
         }
-        else
-            var_dump("no");
-        die;
+
+        return back()->withErrors([
+            'message' => 'Incorrect credentials',
+        ]);
+    }
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect(route('admin.show.login'));
     }
 
 }
