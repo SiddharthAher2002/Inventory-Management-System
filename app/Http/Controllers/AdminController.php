@@ -5,19 +5,29 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Services\MenuService;
 use App\Models\User;
 class AdminController extends Controller
 {
     protected $_userService;
 
+    protected $_menuService;
+
     public function __construct(
-        UserService $userService
+        UserService $userService,
+        MenuService $menuService,
     ) {
         $this->_userService = $userService;
+        $this->_menuService = $menuService;
     }
     public function getAdminDashboard()
     {
-        return view('admin.dashboard');
+        $menus = $this->_menuService->getMenuList();
+        return view('admin.dashboard',['menus'=>$menus]);
+    }
+    public function getAdminDashboardV2()
+    {
+        return view('admin.dashboardv2');
     }
 
     public function showUsers()
@@ -45,7 +55,7 @@ class AdminController extends Controller
 
         if (Auth::attempt($inputCredentials)) {
             $request->session()->regenerate();
-            $user = User::where('email',$inputCredentials['email'])->first();
+            $user = User::where('email', $inputCredentials['email'])->first();
             Auth::login($user);
             return redirect()->intended(route('admin.dashboard'));
         }
@@ -54,11 +64,24 @@ class AdminController extends Controller
             'message' => 'Incorrect credentials',
         ]);
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect(route('admin.show.login'));
     }
+
+    // Manage Menu 
+    public function showMenuForm()
+    {
+        return view('admin.menu-module.add-menu');
+    }
+
+    public function addMenu(Request $request)
+    {
+        $data = $request->all();
+    }
+
 
 }

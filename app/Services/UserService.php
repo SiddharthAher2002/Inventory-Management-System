@@ -16,4 +16,11 @@ class UserService
         $data = $this->_userRepository->getAllUsers($request);
         return $data;
     }
+    public function getUserByEmail($email){
+        if(isset($email) && !empty($email)){
+            $user = $this->_userRepository->getUserByemail($email);
+            return $user;
+        }
+        return false;
+    }
 }
